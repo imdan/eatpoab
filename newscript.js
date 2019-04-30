@@ -110,7 +110,7 @@ function gameOver(e) {
 
     setTimeout(function(){
         scoreBoard.classList.add('show');
-        header4.appendChild(document.createTextNode('HIGH SCORES'));
+        header4.appendChild(document.createTextNode('HIGH SCORE'));
         header4.classList.add('show');
     }, 250);
     
