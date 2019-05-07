@@ -65,6 +65,7 @@ h1 {
 h1, h3 {
     text-align: center;
     font-family: 'Press Start 2P', cursive;
+    cursor: default;
     opacity: 1;
     transition: opacity 2s;
     -webkit-transition: opacity 2s;
@@ -75,6 +76,7 @@ h2 {
     text-align: center;
     font-family: 'Press Start 2P', cursive;
     font-size: 2rem;
+    cursor: default;
     opacity: 0;
     transition: opacity 2s;
     -webkit-transition: opacity 2s;
@@ -85,6 +87,7 @@ h4 {
     text-align: center;
     font-family: 'Press Start 2P', cursive;
     font-size: 1.2rem;
+    cursor: default;
     opacity: 0;
     transition: opacity 2s;
     -webkit-transition: opacity 2s;
@@ -106,6 +109,7 @@ h4 {
     text-align: center;
     list-style: none;
     margin-bottom: 12px;
+    cursor: default;
     opacity: 0;
     transition: opacity 2s;
     -webkit-transition: opacity 2s;

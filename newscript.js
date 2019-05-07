@@ -76,6 +76,7 @@ function buttonFunc(e) {
     hideButton();
 
     player.setAttribute('contenteditable', false);
+    player.style.cursor = 'default';
 
     let start = 0;
 
