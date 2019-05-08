@@ -1,17 +1,31 @@
-let button = document.getElementById('button');
-let score = document.getElementById('score');
-let player = document.getElementById('player');
-let header = document.querySelector('h1');
-let poab = document.getElementById('poab');
-let dotcom = document.getElementById('dotcom');
-let header2 = document.querySelector('h2');
-let header4 = document.querySelector('h4');
-let highScores = document.querySelectorAll('.scores');
-let scoreBoard = document.getElementById('scoreboard');
-let playAgain = document.querySelector('.play-again');
+let button = document.getElementById('button'),
+    score = document.getElementById('score'),
+    player = document.getElementById('player'),
+    header = document.querySelector('h1'),
+    poab = document.getElementById('poab'),
+    dotcom = document.getElementById('dotcom'),
+    header2 = document.querySelector('h2'),
+    header4 = document.querySelector('h4'),
+    highScores = document.querySelectorAll('.scores'),
+    scoreBoard = document.getElementById('scoreboard'),
+    playAgain = document.querySelector('.play-again');
 
-let counter;
-let timer;
+let counter,
+    timer;
+
+// get player name
+
+document.addEventListener('DOMContentLoaded', getName);
+
+function getName() {
+    let playerName = localStorage.getItem('playername');
+
+    if(playerName ===  null) {
+        player.innerHTML = 'player1';
+    } else {
+        player.innerHTML = playerName;
+    }
+}
 
 // timer function
 
