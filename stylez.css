@@ -1,27 +1,32 @@
+:root {
+    --main-red: #d30101;
+}
+
 a {
     opacity: 1;
     transition: opacity 1.5s;
     -webkit-transition: opacity 1.5s;
 }
 
-#button {
+/* #button {
+    box-sizing: border-box;
     position: absolute;
     display: block;
-    width: 155px;
-    height: 40px;
+    width: 100px;
+    height: 100px;
     color: white;
-    background-color: firebrick;
+    background-color: var(--main-red);
     border: solid 1.5px white;
-    top: 46vh;
+    top: 44vh;
     left: 50%;
-    margin-left: -75px;
+    margin-left: -50px;
     margin-right: auto;
     text-align: center;
-    padding-top: 12px;
+    padding-top: 32px;
     padding-bottom: 8px;
     font-family: 'Press Start 2P', cursive;
     font-size: 12px;
-    border-radius: 50px;
+    border-radius: 100px;
     animation-name: breathe;
     animation-duration: 1.5s;
     animation-direction: alternate;
@@ -29,7 +34,8 @@ a {
     opacity: 1;
     transition: opacity 1.5s;
     -webkit-transition: opacity 1.5s;
-}
+    cursor: pointer;
+} */
 
 #button:active {
     transition-duration: .25s;
@@ -49,6 +55,31 @@ a {
     color: firebrick;
 }
 
+.listen {
+    font-family: 'Press Start 2P', cursive;
+    position: absolute;
+    /* display: none; */
+    left: -175px;
+    bottom: 42px;
+    font-size: 14px;
+    color: var(--main-red);
+   
+}
+
+.slideIn {
+    animation: slideIn;
+    animation-duration: 1s;
+    /* animation-delay: 1s; */
+    animation-fill-mode: forwards;
+}
+
+.slideOut {
+    animation-name: slideOut;
+    animation-duration: 1s;
+    /* animation-timing-function: ease-in; */
+    animation-fill-mode: forwards;
+}
+
 #player {
     font-family: 'Press Start 2P', cursive;
     position: absolute;
@@ -58,8 +89,9 @@ a {
 }
 
 h1 {
-    color: firebrick;
-    margin-top: 15vh;
+    color: var(--main-red);
+    margin-top: 18vh;
+    font-size: 2.2rem;;
 }
 
 h1, h3 {
@@ -71,8 +103,41 @@ h1, h3 {
     -webkit-transition: opacity 2s;
 }
 
+.agame {
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    /* font-weight: bold; */
+    /* font-style: italic; */
+    margin-top: 27px;
+    cursor: default;
+    opacity: 1;
+    transition: opacity 2s;
+    -webkit-transition: opacity 2s;
+}
+
+.toStart {
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: bold;
+    font-size: 10px;
+    color: black;
+    margin-top: 30px;
+    cursor: default;
+    opacity: 1;
+    transition: opacity 2s;
+    -webkit-transition: opacity 2s;
+}
+
+.gameOverContainer {
+    position: absolute;
+    width: 100%;
+    top: 20vh;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 h2 {
-    color: firebrick;
+    color: var(--main-red);
     text-align: center;
     font-family: 'Press Start 2P', cursive;
     font-size: 2rem;
@@ -86,7 +151,7 @@ h4 {
     color: black;
     text-align: center;
     font-family: 'Press Start 2P', cursive;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     cursor: default;
     opacity: 0;
     transition: opacity 2s;
@@ -95,6 +160,20 @@ h4 {
 
 .hide {
     opacity: 0;
+}
+
+.numberOfPushes {
+    /* display: none; */
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: bold;
+    font-size: 10px;
+    margin-top: 30px;;
+    color: black;
+    cursor: default;
+    /* opacity: 0; */
+    transition: opacity 2s;
+    -webkit-transition: opacity 2s;
 }
 
 #scoreboard {
@@ -127,29 +206,186 @@ h4 {
     display: block;
     text-align: center;
     font-size: 1.2rem;
-    margin-top: 4rem;
+    margin-top: 2rem;
     color: black;
     cursor: pointer;
     opacity: 0;
     transition: opacity 2s;
     -webkit-transition: opacity 2s;
+    z-index: 10;
 }
 
 .play-again:hover {
-    color: firebrick;
+    color: var(--main-red);
+}
+
+.blink {
+    animation-name: blink;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
 .show {
     opacity: 1;
 }
 
-@media screen and (orientation: landscape) {
+/* @media screen and (orientation: landscape) {
     h1 {
         margin-top: 50px;
     }
     button {
         top: 220px;
     }
+} */
+
+/* shoutout josh comeau -> https://www.joshwcomeau.com/animation/3d-button/ */
+
+.container {
+    display: block;
+    margin: auto;
+    margin-top: 32px;
+    width: 100px;
+}  
+  
+.pushable {
+    position: relative;
+    font-family: 'Press Start 2P', cursive;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    transition: filter 250ms;
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+    
+.shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    background: hsl(0deg 0% 0% / 0.25);
+    will-change: transform;
+    transform: translateY(4px);
+    transition:
+    transform
+    600ms
+    cubic-bezier(.3, .7, .4, 1);
+}
+
+.edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(
+    to left,
+    hsl(340deg 100% 16%) 0%,
+    hsl(340deg 100% 32%) 8%,
+    hsl(340deg 100% 32%) 92%,
+    hsl(340deg 100% 16%) 100%
+    );
+}
+
+.front {
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    padding-top: 42px;
+    width:100px;
+    height: 100px;
+    border-radius: 100px;
+    font-size: .8rem;
+    color: hsl(345deg 100% 28%);
+/*     color: white; */
+    background: radial-gradient(hsl(345deg 100% 58%), hsl(345deg 100% 38%), hsl(345deg 100% 60%));
+    will-change: transform;
+    transform: translateY(-4px);
+    transition:
+    transform
+    600ms
+    cubic-bezier(.3, .7, .4, 1);
+}
+
+.pushable:hover {
+    filter: brightness(110%);
+}
+
+.pushable:hover .front {
+    transform: translateY(-6px);
+    transition:
+    transform
+    250ms
+    cubic-bezier(.3, .7, .4, 1.5);
+}
+
+/* .pushable:active .front {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+}
+
+.pushable:hover .shadow {
+    transform: translateY(6px);
+    transition:
+    transform
+    250ms
+    cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.pushable:active .shadow {
+    transform: translateY(1px);
+    transition: transform 34ms;
+} */
+
+.pushable:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* end shoutout */
+  
+.sink {
+animation-name: sink;
+animation-duration: 2s;
+animation-delay: .5s;
+animation-iteration-count: 1;
+animation-fill-mode: forwards;
+}
+
+.melt {
+animation-name: melt;
+animation-duration: 1s;
+/*   animation-delay: 1.25s; */
+animation-iteration-count: 1;
+animation-fill-mode: forwards;
+}
+
+@keyframes sink {
+0% {
+    transform: translateY(-6px);
+}
+100% {
+    transform: translateY(0px);
+}
+}
+
+@keyframes melt {
+0% {
+    opacity: 1;
+}
+100% {
+    opacity: 0;
+    display: none;
+    cursor: default;
+}
 }
 
 @keyframes breathe {
@@ -159,4 +395,31 @@ h4 {
     to {
         box-shadow: 0px 0px 20px 12px rgba(0, 0, 0, 0.2);
     }   
+}
+
+@keyframes blink {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        left: -175px;
+    }
+    to {
+        left: 15px;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        left: 15px;
+    }
+    to {
+        left: -175px;
+    }
 }

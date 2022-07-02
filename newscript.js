@@ -1,14 +1,24 @@
+// this file is incomplete, like myself, need to finish implementing some things...total button push func, high score getting and setting, probably more idk right now, i'll figure it out, what are you even doing here?
+
+
 let button = document.getElementById('button'),
     score = document.getElementById('score'),
     player = document.getElementById('player'),
+    listen = document.getElementById('listen'),
     header = document.querySelector('h1'),
     poab = document.getElementById('poab'),
-    dotcom = document.getElementById('dotcom'),
+    agame = document.getElementById('agame'),
     header2 = document.querySelector('h2'),
     header4 = document.querySelector('h4'),
     highScores = document.querySelectorAll('.scores'),
     scoreBoard = document.getElementById('scoreboard'),
-    playAgain = document.querySelector('.play-again');
+    playAgain = document.querySelector('.play-again'),
+    toStart = document.getElementById('toStart'),
+    numberOfPushes = document.getElementById('numberOfPushes'),
+    totalPushes = document.getElementById('totalPushes'),
+    totalPushesCount = 420,
+    startTime,
+    endTime;
 
 let counter,
     timer;
@@ -20,12 +30,48 @@ document.addEventListener('DOMContentLoaded', getName);
 function getName() {
     let playerName = localStorage.getItem('playername');
 
-    if(playerName ===  null) {
+    if(playerName ===  null || playerName === 'player1') {
         player.innerHTML = 'player1';
+        listen.classList.add('slideIn');
+        
     } else {
         player.innerHTML = playerName;
     }
 }
+
+// get total pushes
+
+document.addEventListener('DOMContentLoaded', getTotalPushes);
+
+function getTotalPushes() {
+    totalPushes.innerHTML = totalPushesCount;
+}
+
+function incrementPushes() {
+    totalPushesCount += 1;
+    totalPushes.innerHTML = totalPushesCount;
+}
+
+// hide listen on player focus
+
+player.addEventListener('focus', () => {
+    // let playerName = localStorage.getItem('playername');
+    // if(playerName === null) {
+    //     listen.classList.remove('slideIn');
+    //     listen.classList.add('slideOut');
+    // }
+
+    listen.classList.remove('slideIn');
+    listen.classList.add('slideOut');
+});
+
+player.addEventListener('keydown', (e) => {
+    if (e.code === 'Enter') {
+        e.preventDefault()
+        player.blur();
+    }
+})
+
 
 // timer function
 
@@ -69,7 +115,14 @@ function hideButton() {
 function buttonFunc(e) {
     e.preventDefault();
 
-    
+    console.log('button push');
+    incrementPushes();
+
+    startTime = new Date().getTime();
+
+    listen.classList.remove('slideIn');
+    listen.classList.add('slideOut');
+
     setTimeout(function(){
     header.classList.add('hide');
         }, 1250);
@@ -83,11 +136,14 @@ function buttonFunc(e) {
     }, 500);
 
     setTimeout(function(){
-        dotcom.classList.add('hide');
+        agame.classList.add('hide');
     }, 250);
 
-    button.parentElement.classList.add('hide');
-    hideButton();
+    toStart.classList.remove('blink');
+    toStart.classList.add('hide');
+
+    // button.parentElement.classList.add('hide');
+    // hideButton();
 
     player.setAttribute('contenteditable', false);
     player.style.cursor = 'default';
@@ -104,35 +160,61 @@ function buttonFunc(e) {
 // click event
 
 button.addEventListener('click', buttonFunc);
+button.addEventListener('touchstart', () => {
+    navigator.vibrate(34);
+})
 
 // Game over functions
 
 function endGame() {
-    let frame = document.querySelector('html');
-    frame.addEventListener('mouseleave', gameOver);
-    frame.addEventListener('mouseup', gameOver);
+    // let frame = document.querySelector('html');
+    // frame.addEventListener('mouseleave', gameOver);
+    // frame.addEventListener('mouseup', gameOver);
+    button.addEventListener('click', () => {
+        incrementPushes()
+        gameOver()
+    });
 }
 
 function gameOver(e) {
     console.log('GAME OVER');
+
+    // button.classList.add('sink');
+    button.classList.add('melt');
+    
+
+    endTime = new Date().getTime();
+    timeDiff = (startTime - endTime) / 1000;
+
+    timeDiff = timeDiff / 60;
+    elapsedTime = Math.floor(Math.abs(timeDiff));
+    console.log(elapsedTime);
+
+
     let paContainer = document.getElementById('pa-container');
 
     // put settimeouts on these for cascade effect
 
-    header2.appendChild(document.createTextNode('GAME OVER'));
+    header2.appendChild(document.createTextNode('game over'));
     header2.classList.add('show');
     paContainer.style.display = 'block';
 
     setTimeout(function(){
         scoreBoard.classList.add('show');
-        header4.appendChild(document.createTextNode('HIGH SCORE'));
+        header4.appendChild(document.createTextNode('high scores'));
         header4.classList.add('show');
-    }, 250);
+        
+    }, 220);
+
+    // setTimeout(function(){
+    //     numberOfPushes.classList.add('show');
+    // }, 220);
     
     setTimeout(function(){
         // paContainer.style.display = 'block';
-        playAgain.classList.add('show');
-    }, 850);
+        button.style.display = 'none';
+        playAgain.classList.add('blink');
+    }, 2750);
     
 
     storeScoreInLocalStorage();
@@ -147,7 +229,7 @@ function gameOver(e) {
     for(let i = 0; i < highScores.length; i++){
         setTimeout(function() {
             highScores[i].classList.add('show');
-        }, 500 * (i + 1));
+        }, 420 * (i + 1));
     }
 
     stopCounter();
@@ -160,10 +242,19 @@ function gameOver(e) {
 // score say SUP
 
 score.addEventListener('dblclick', saySup);
+score.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (score.innerHTML == 'SUP') {goToSup(e)};
+})
 
 function saySup(e) {
     e.preventDefault();
     score.innerHTML = 'SUP'
+}
+
+function goToSup(e) {
+    e.preventDefault();
+    window.location.href = "https://www.sup.cool";
 }
 
 // refresh page
